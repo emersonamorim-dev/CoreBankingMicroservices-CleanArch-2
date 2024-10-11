@@ -8,6 +8,7 @@ Este projeto é projetado para funcionar em um ambiente empresarial de ponta, in
 
 #### Principais Ferramentas e Tecnologias
 - Scala: Linguagem principal utilizada para desenvolvimento, oferecendo tipagem forte e suporte a programação funcional e orientada a objetos.
+- Java 17 para compilar aplicação
 - DynamoDB: Utilizado como banco de dados NoSQL para armazenar informações dos seguros e das transações.
 - RabbitMQ: Broker de mensagens para comunicação assíncrona e processamento de eventos entre serviços.
 - Redis: Implementado como solução de cache para acelerar o acesso a dados e reduzir a carga em DynamoDB.
