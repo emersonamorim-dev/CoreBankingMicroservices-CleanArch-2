@@ -1,6 +1,6 @@
 ### Core Digital Banking Microservices 2 - Scala, Rust e Python 🚀 🔄 🌐
 
-O Core Digital Banking Microservice 2 é a segunda parta de uma solução robusta e resiliente para bancos digitais,
+O Core Digital Banking Microservice 2 é a segunda parte de uma solução robusta e resiliente para bancos digitais,
  baseada em uma Arquitetura de Microserviços Poliglota. Cada microserviço é responsável por uma função crítica 
  do sistema bancário, utilizando diferentes tecnologias para atender às suas necessidades específicas, 
  garantindo escalabilidade, flexibilidade e robustez.
