@@ -99,10 +99,10 @@ RabbitMQ, Redis, e bancos de dados respectivos (PostgreSQL, MySQL, MongoDB)
 #### Passos de Instalação
 Clone o repositório do microserviço:
 ```
-git clone https://github.com/emersonamorim-dev/CoreBankingMicroservices-CleanArch.git
+git clone https://github.com/emersonamorim-dev/CoreBankingMicroservices-CleanArch-2.git
 ```
 ```
-cd CoreBankingMicroservices-CleanArch
+cd CoreBankingMicroservices-CleanArch-2
 ```
 
 #### Monitoramento e Métricas
