@@ -14,6 +14,10 @@ Este projeto segue os padrões de Arquitetura Limpa (Clean Architecture), garant
 - Prometheus: Ferramenta para monitorar métricas da aplicação e garantir o funcionamento adequado, monitorando a performance em tempo real.
 - Grafana: Dashboard integrado para visualização das métricas coletadas pelo Prometheus, facilitando o monitoramento da saúde e desempenho do sistema.
 
+#### Diagrama da Aplicação
+
+![](https://raw.githubusercontent.com/emersonamorim-dev/CoreBankingMicroservices-CleanArch-2/refs/heads/main/Diagrama/Diagrama-Arquitetura-Empr%C3%A9stimo-Microservices.png)
+
 
 ```
 git clone https://github.com/seu-repositorio/emprestimo-microservice.git
