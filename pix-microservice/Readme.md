@@ -42,6 +42,13 @@ O projeto segue uma arquitetura organizada em camadas, promovendo separação de
 
 - PrometheusMetrics: Implementa o monitoramento da aplicação, exportando métricas que podem ser consumidas pelo Prometheus e visualizadas no Grafana.
 
+
+#### Diagrama da Aplicação
+
+![](https://raw.githubusercontent.com/emersonamorim-dev/CoreBankingMicroservices-CleanArch-2/refs/heads/main/Diagrama/Diagrama-Arquitetura-Pix-Microservices.png)
+
+
+
 ##### Comandos para rodar aplicação
 
 ```
