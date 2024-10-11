@@ -1,0 +1,70 @@
+[package]
+name = "pix-microservice"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# DynamoDB SDK da AWS
+aws-config = "0.9.0"
+aws-sdk-dynamodb = "0.9.0"
+aws-types = "0.9.0"  
+
+
+tokio = { version = "1", features = ["full"] }
+serde = { version = "1.0", features = ["derive"] }
+futures-util = "0.3"
+
+# Serde para serialização/deserialização de dados
+serde_json = "1.0"
+
+
+# RabbitMQ via Lapin
+lapin = { version = "2.5.0", features = ["native-tls"] }
+
+# UUID para gerar IDs únicos para transações
+uuid = { version = "1.0", features = ["serde", "v4"] }
+chrono = { version = "0.4", features = ["serde"] }
+
+# Redis para cache
+redis = { version = "0.21", features = ["aio", "tokio-comp"] }
+
+# Monitoramento e métricas
+prometheus = "0.13"
+log = "0.4"
+tracing = "0.1"
+tracing-subscriber = "0.2"
+lazy_static = "1.4"
+
+# HTTP Client
+reqwest = { version = "0.11", features = ["json", "native-tls"] }
+
+# Tonic e Prost para gRPC
+tonic = "0.6"
+prost = "0.9"
+prost-types = "0.9"
+
+# QrCode para geração de QR Codes
+qrcode = "0.12"
+image = "0.24.5"
+env_logger = "0.9.0"
+
+# Futuras e async/await padrões
+futures = "0.3"
+
+# Configurações de ambiente e arquivos .env
+dotenv = "0.15"
+config = "0.10"
+
+
+# Web framework Actix
+actix-web = "4.0"
+
+# Async-trait para usar traits com async
+async-trait = "0.1"
+
+[build-dependencies]
+tonic-build = "0.6"
+
+[[bin]]
+name = "pix-microservice"
+path = "src/main.rs"

@@ -1,0 +1,88 @@
+version: '3.9'
+
+services:
+  pix-microservice:
+    build: /home/seu-usuario/corebankingmicroservices-cleanarch-2/pix-microservice/
+    environment:
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5673  # Porta personalizada
+      - DYNAMODB_ENDPOINT=http://dynamodb:8000  
+      - REDIS_URL=redis://redis-cache:6379 
+      - RUST_BACKTRACE=1  
+    dns:
+      - 8.8.8.8  # DNS do Google
+    ports:
+      - "8096:8096"
+    networks:
+      - microservice-network
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      redis-cache:
+        condition: service_healthy
+      dynamodb:
+        condition: service_started  
+
+  dynamodb:
+    image: amazon/dynamodb-local
+    ports:
+      - "8000:8000"
+    networks:
+      - microservice-network
+
+  redis-cache:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - microservice-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  rabbitmq:
+    image: rabbitmq:management
+    hostname: rabbitmq  
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    ports:
+      - "5673:5672"  # Expõe a porta interna 5672 como 5673 externamente
+      - "15673:15672"  
+    networks:
+      - microservice-network
+    volumes:
+      - ./rabbitmq_conf/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf 
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus3
+    ports:
+      - "9094:9090"
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    networks:
+      - microservice-network
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana3
+    ports:
+      - "3081:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    networks:
+      - microservice-network
+
+networks:
+  microservice-network:
+    driver: bridge

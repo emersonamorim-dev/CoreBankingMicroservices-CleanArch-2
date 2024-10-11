@@ -1,0 +1,14 @@
+[server]
+host = "0.0.0.0"
+port = 8096
+
+[database]
+url = "cassandra://localhost:9042"
+username = "cassandra"
+password = "180281"
+
+[redis]
+url = "redis://localhost:6379"
+
+[rabbitmq]
+url = "amqp://guest:guest@localhost:5672"

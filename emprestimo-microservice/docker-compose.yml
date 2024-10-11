@@ -1,0 +1,81 @@
+version: '3.9'
+
+services:
+  emprestimo-microservice:
+    build: /home/seu-usuario/corebankingmicroservices-cleanarch-2/emprestimo-microservice/
+    environment:
+      - MONGO_URL=mongodb://mongo-db:27017/emprestimo_db
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
+      - PROMETHEUS_PORT=8000
+      - APP_ENV=development
+      - APP_DEBUG=True
+      - PORT=8099  
+    dns:
+      - 8.8.8.8
+    ports:
+      - "8099:8099"
+    networks:
+      - microservice-network
+    depends_on:
+      mongo-db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    command: ["sh", "-c", "until nc -z rabbitmq 5672; do echo 'Waiting for RabbitMQ...'; sleep 5; done; uvicorn src.main:app --host 0.0.0.0 --port 8099"]
+
+  mongo-db:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_DATABASE: emprestimo_db
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./databases/mongo/data:/data/db
+    networks:
+      - microservice-network
+    healthcheck:
+      test: ["CMD-SHELL", "mongo --eval 'db.runCommand({ ping: 1 })' || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - microservice-network
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - '3000:3000'
+    networks:
+      - microservice-network
+
+  rabbitmq:
+    image: rabbitmq:management
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+      RABBITMQ_ERLANG_COOKIE: "supersecretcookie"
+    volumes:
+      - ./config/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - microservice-network
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+networks:
+  microservice-network:
+    driver: bridge

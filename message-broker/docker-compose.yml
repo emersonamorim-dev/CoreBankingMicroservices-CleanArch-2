@@ -1,0 +1,48 @@
+version: '3.9'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq-broker
+    ports:
+      - "5681:5681"      
+      - "15681:15681"
+      - "6000:6000"   
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    dns:
+      - 8.8.8.8   # DNS do Google
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+      - ./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf 
+    healthcheck:
+      test: ["CMD-SHELL", "rabbitmq-diagnostics -q ping"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 5s
+    networks:
+      - broker-network
+
+  message-broker:
+    build: .
+    container_name: message-broker
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    environment:
+      RABBITMQ_URL: amqp://guest:guest@rabbitmq:5681  
+    networks:
+      - broker-network
+    command: node server.js
+    volumes:
+      - .:/usr/src/app
+    working_dir: /usr/src/app
+
+networks:
+  broker-network:
+    driver: bridge
+
+volumes:
+  rabbitmq_data:
