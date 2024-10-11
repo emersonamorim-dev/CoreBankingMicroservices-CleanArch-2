@@ -59,12 +59,12 @@ Prometheus é usado para monitorar métricas de performance da aplicação, como
 
 
 
+##### Clone o repositório do microserviço:
 ```
-git clone https://github.com/seu-repositorio/seguros-autos-microservice.git
+git clone https://github.com/emersonamorim-dev/CoreBankingMicroservices-CleanArch-2.git
 ```
-
 ```
-cd seguros-autos-microservice
+cd CoreBankingMicroservices-CleanArch-2
 ```
 
 
