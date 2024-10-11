@@ -51,6 +51,13 @@ RabbitMQ é utilizado para a comunicação entre os microserviços de maneira as
 Prometheus é usado para monitorar métricas de performance da aplicação, como tempo de resposta das APIs e uso de memória. Grafana fornece um dashboard visual para acompanhar esses dados em tempo real.
 
 
+#### Diagrama da Aplicação
+
+![](https://raw.githubusercontent.com/emersonamorim-dev/CoreBankingMicroservices-CleanArch-2/refs/heads/main/Diagrama/Diagrama-Seguros-Autos-Microservices.png)
+
+
+
+
 
 ```
 git clone https://github.com/seu-repositorio/seguros-autos-microservice.git
