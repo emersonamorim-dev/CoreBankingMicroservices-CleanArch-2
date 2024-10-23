@@ -66,7 +66,7 @@ class SeguroController(
       metodoPagamento = metodoPagamento
     )
 
-    // Publicar a mensagem no RabbitMQ
+    // Publica a mensagem no RabbitMQ
     val mensagem = s"Seguro processado para o veículo ${veiculo.marca} ${veiculo.modelo}, placa ${veiculo.placa}."
     clienteRabbitMQ.publicarMensagem(mensagem)
 
